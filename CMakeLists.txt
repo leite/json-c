@@ -129,3 +129,30 @@ add_custom_target(check
                    COMMAND test_cast
                    DEPENDS test1 test2 test4 test_parse_int64 test_null
                    test_cast)
+
+# installation
+set(INSTALL_HEADERS ${JSON_HEADERS})
+set(INSTALL_TARGETS json)
+
+if (WIN32)
+    if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+        set(CMAKE_INSTALL_PREFIX "${PROJECT_BINARY_DIR}/install" CACHE PATH "Windows install prefix" FORCE)
+    endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+
+    install(FILES ${INSTALL_HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX})
+
+    set(EXECUTABLE_OUTPUT_PATH ${CMAKE_INSTALL_PREFIX})
+    set(LIBRARY_OUTPUT_PATH ${CMAKE_INSTALL_PREFIX})
+
+    if (CMAKE_SIZEOF_VOID_P EQUAL 8)
+        set(EXECUTABLE_OUTPUT_PATH ${EXECUTABLE_OUTPUT_PATH}/x64)
+    endif()
+
+else (WIN32)
+    install(FILES ${INSTALL_HEADERS} DESTINATION include)
+    install(TARGETS ${INSTALL_TARGETS}
+            ARCHIVE DESTINATION lib
+            LIBRARY DESTINATION lib
+            RUNTIME DESTINATION bin)
+
+endif(WIN32)
