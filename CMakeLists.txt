@@ -14,7 +14,6 @@ set(PACKAGE_TARNAME ${PROJECT_NAME}) # CACHE STRING "package tar name")
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 add_definitions(-DHAVE_CONFIG_H)
 
-include(BaseConfig)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
 include(CheckDefIncludeFiles)
@@ -89,7 +88,7 @@ endif(HAVE_SIZE_T)
 
 configure_file(config.h.cmake config.h)
 
-
+include(BaseConfig)
 # build config
 
 set(JSON_HEADERS arraylist.h bits.h debug.h json.h json_inttypes.h
