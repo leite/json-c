@@ -97,6 +97,10 @@ set(JSON_HEADERS arraylist.h bits.h debug.h json.h json_inttypes.h
 set(JSON_SOURCES arraylist.c debug.c json_object.c json_tokener.c json_util.c
     linkhash.c printbuf.c)
 
+if(WIN32)
+    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/extra)
+endif()
+
 add_library(json ${JSON_SOURCES} ${JSON_HEADERS})
 set_target_properties(json PROPERTIES
     VERSION ${PROJECT_VERSION}

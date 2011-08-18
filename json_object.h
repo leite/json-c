@@ -12,6 +12,9 @@
 #ifndef _json_object_h_
 #define _json_object_h_
 
+#include <inttypes.h>
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif

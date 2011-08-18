@@ -46,7 +46,7 @@
 # define open _open
 #endif
 
-
+#define __STDC_FORMAT_MACROS
 #include "bits.h"
 #include "debug.h"
 #include "printbuf.h"
@@ -130,13 +130,15 @@ int json_object_to_file(char *filename, struct json_object *obj)
 int json_parse_int64(const char *buf, int64_t *retval)
 {
 	int64_t num64;
+	const char *buf_skip_space;
+	int orig_has_neg;
 	if (sscanf(buf, "%" SCNd64, &num64) != 1)
 	{
 		MC_DEBUG("Failed to parse, sscanf != 1\n");
 		return 1;
 	}
-	const char *buf_skip_space = buf;
-	int orig_has_neg = 0;
+	buf_skip_space = buf;
+	orig_has_neg = 0;
 	// Skip leading spaces
 	while (isspace((int)*buf_skip_space) && *buf_skip_space)
 		buf_skip_space++;
@@ -150,12 +152,13 @@ int json_parse_int64(const char *buf, int64_t *retval)
 		buf_skip_space++;
 	if (buf_skip_space[0] == '0' && buf_skip_space[1] == '\0')
 		orig_has_neg = 0; // "-0" is the same as just plain "0"
-	
+
 	if (errno != ERANGE)
 	{
 		char buf_cmp[100];
 		char *buf_cmp_start = buf_cmp;
 		int recheck_has_neg = 0;
+        int buf_cmp_len ;
 		snprintf(buf_cmp_start, sizeof(buf_cmp), "%" PRId64, num64);
 		if (*buf_cmp_start == '-')
 		{
@@ -164,7 +167,7 @@ int json_parse_int64(const char *buf, int64_t *retval)
 		}
 		// No need to skip leading spaces or zeros here.
 
-		int buf_cmp_len = strlen(buf_cmp_start);
+		buf_cmp_len = strlen(buf_cmp_start);
 		/**
 		 * If the sign is different, or
 		 * some of the digits are different, or
