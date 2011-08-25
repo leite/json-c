@@ -21,6 +21,7 @@ extern "C" {
 
 #define JSON_OBJECT_DEF_HASH_ENTRIES 16
 
+
 #undef FALSE
 #define FALSE ((boolean)0)
 
@@ -40,7 +41,10 @@ struct json_object_iter
 
 /* forward structure definitions */
 
-typedef int boolean;
+#ifndef WIN32
+  typedef int boolean;
+#endif
+
 typedef struct printbuf printbuf;
 typedef struct lh_table lh_table;
 typedef struct array_list array_list;
