@@ -43,6 +43,8 @@ struct json_object_iter
 
 #ifndef WIN32
   typedef int boolean;
+#else
+  typedef bool boolean;
 #endif
 
 typedef struct printbuf printbuf;
