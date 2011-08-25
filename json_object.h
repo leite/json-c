@@ -41,10 +41,8 @@ struct json_object_iter
 
 /* forward structure definitions */
 
-#ifndef WIN32
+#ifndef boolean
   typedef int boolean;
-#else
-  typedef bool boolean;
 #endif
 
 typedef struct printbuf printbuf;
