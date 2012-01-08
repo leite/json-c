@@ -101,7 +101,8 @@ if(WIN32)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/extra)
 endif()
 
-add_library(json ${JSON_SOURCES} ${JSON_HEADERS})
+#add_library( json ${JSON_SOURCES} ${JSON_HEADERS} )
+add_library( json SHARED ${JSON_SOURCES} ${JSON_HEADERS} )
 set_target_properties(json PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION 1.0.1)
@@ -140,7 +141,7 @@ set(INSTALL_TARGETS json)
 
 if (WIN32)
     if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-        set(CMAKE_INSTALL_PREFIX "${PROJECT_BINARY_DIR}/install" CACHE PATH "Windows install prefix" FORCE)
+        set(CMAKE_INSTALL_PREFIX "${PROJECT_BINARY_DIR}/bin" CACHE PATH "Windows install prefix" FORCE)
     endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
     install(FILES ${INSTALL_HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX})

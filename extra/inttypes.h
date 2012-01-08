@@ -29,8 +29,12 @@
 // 
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef _MSC_VER // [
+#if defined(_MSC_VER) // [
+#if !defined(__MINGW32__)
+#if !defined(__MINGW64__)
 #error "Use this header only with Microsoft Visual C++ compilers!"
+#endif
+#endif
 #endif // _MSC_VER ]
 
 #ifndef _MSC_INTTYPES_H_ // [
@@ -272,10 +276,12 @@ typedef struct {
 
 // This is modified version of div() function from Microsoft's div.c found
 // in %MSVC.NET%\crt\src\div.c
+
+/*
 #ifdef STATIC_IMAXDIV // [
 static
 #else // STATIC_IMAXDIV ][
-_inline
+//_inline
 #endif // STATIC_IMAXDIV ]
 imaxdiv_t __cdecl imaxdiv(intmax_t numer, intmax_t denom)
 {
@@ -292,6 +298,7 @@ imaxdiv_t __cdecl imaxdiv(intmax_t numer, intmax_t denom)
 
    return result;
 }
+*/
 
 // 7.8.2.3 The strtoimax and strtoumax functions
 #define strtoimax _strtoi64

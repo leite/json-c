@@ -29,8 +29,12 @@
 // 
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef _MSC_VER // [
+#if defined(_MSC_VER) // [
+#if !defined(__MINGW32__)
+#if !defined(__MINGW64__)
 #error "Use this header only with Microsoft Visual C++ compilers!"
+#endif
+#endif
 #endif // _MSC_VER ]
 
 #ifndef _MSC_STDINT_H_ // [
