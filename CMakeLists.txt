@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
+option(USE_SHARED_JSON_LIBRARY "Build PolarSSL as a shared library." OFF)
+
 project(json-c)
 set(PROJECT_VERSION 0.10)
 
@@ -101,11 +103,16 @@ if(WIN32)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/extra)
 endif()
 
-#add_library( json ${JSON_SOURCES} ${JSON_HEADERS} )
+if(NOT USE_SHARED_JSON_LIBRARY)
+
+add_library( json STATIC ${JSON_SOURCES} ${JSON_HEADERS} )
+
+else(NOT USE_SHARED_JSON_LIBRARY)
+
 add_library( json SHARED ${JSON_SOURCES} ${JSON_HEADERS} )
-set_target_properties(json PROPERTIES
-    VERSION ${PROJECT_VERSION}
-    SOVERSION 1.0.1)
+set_target_properties(json PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION 1.0.1)
+
+endif(NOT USE_SHARED_JSON_LIBRARY)
 
 add_executable(test1 EXCLUDE_FROM_ALL test1.c)
 target_link_libraries(test1 json)
